@@ -5,5 +5,3 @@
 .vscode/ipch
 test
 platformio.ini
-lib
-.vscode
