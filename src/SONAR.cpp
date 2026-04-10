@@ -15,14 +15,13 @@ void SONAR_init() {
     sei();					/* Enable global interrupt */
 	TIMSK1 = (1 << TOIE1);	/* Enable Timer1 overflow interrupts */
 	TCCR1A = 0;	
-    USART_send_string("Ultrasonic");
 }
 
-int SONAR_dist() {
+double SONAR_dist() {
     char string[10];
 	long count;
 	double distance;
-    USART_send_string("Distance");
+
     PORTB |= (1 << Trigger_pin);/* Give 10us trigger pulse on trig. pin to HC-SR04 */
 	_delay_us(10);
 	PORTB &= (~(1 << Trigger_pin));
@@ -46,12 +45,5 @@ int SONAR_dist() {
 	/* 16MHz Timer freq, sound speed =343 m/s,  17150 x Timer value * 0.0625 x 10 ^ -6 = Timer value / 932.8*/
 	distance = (double)count / 932.8;
 
-	dtostrf(distance, 2, 2, string);/* Convert distance into string */
-	strcat(string, " cm   ");
-	USART_send_string("Dist = ");
-	USART_send_string(string);	/* Print distance on serial monitor */
-	USART_send('\n');
-	_delay_ms(200);
-
-    return (int)distance;
+    return distance;
 }

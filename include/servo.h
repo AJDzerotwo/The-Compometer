@@ -14,3 +14,4 @@ int servo_rotate();
 int servo_left();
 int servo_right();
 
+void servo_rotate_degree(int degree);

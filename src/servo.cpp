@@ -57,3 +57,9 @@ int servo_init()
 	TCCR1A = (1<<WGM11|1<<COM1A1);  // set required WGM and COM bits in register A to be filled
 	TCCR1B =  (1<<CS11|1<<CS10|1<<WGM13|1<<WGM12); // set required WGM and CS bits to be filled
 }
+
+void servo_rotate_degree(int degree) {
+    OCR1A = degreeToDuty(degree);
+    _delay_ms(1000);
+
+}

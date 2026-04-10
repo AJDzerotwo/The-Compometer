@@ -8,4 +8,4 @@
 
 void SONAR_init();
 
-int SONAR_dist();
+double SONAR_dist();
