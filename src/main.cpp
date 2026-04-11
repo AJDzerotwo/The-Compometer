@@ -117,7 +117,8 @@ int main () {
 }
 
 
-void servo_rotate(double *dist_array)
+void servo_rotate(double *dist_array) //Rotates the servo, takes measurements
+//at each azimuth step and populates dist_array with the measurements
 {
     servo_goto(0);
     _delay_ms(1000);
@@ -130,7 +131,9 @@ void servo_rotate(double *dist_array)
    
 }
 
+
 void SONAR_print(double *dist_array) {
+  //Prints a ascii square radar display using the measurements from dist_array
   char string[10];
   USART_send('\n');
   for (int row = 29; row > 0; row--) {
