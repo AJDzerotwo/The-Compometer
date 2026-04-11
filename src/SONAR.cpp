@@ -44,6 +44,6 @@ double SONAR_dist() {
 	count = ICR1 + (65535 * TimerOverflow);	/* Take value of capture register */
 	/* 16MHz Timer freq, sound speed =343 m/s,  17150 x Timer value * 0.0625 x 10 ^ -6 = Timer value / 932.8*/
 	distance = (double)count / 932.8;
-   // USART_send_string("\n");
+    
     return distance;
 }
