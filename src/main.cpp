@@ -124,7 +124,7 @@ void servo_rotate(double *dist_array)
       for (d = 0; d <= 180; d+= azimuth_step) 
       {   			 
         dist_array[d/azimuth_step] = SONAR_dist();
-        OCR1A = degreeToDuty(d);
+        OCR2A = degreeToDuty(d);
    		  _delay_ms(50 * azimuth_step);
 	  }
    
