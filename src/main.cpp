@@ -21,7 +21,11 @@
 //Remove ADC files, Redundant
 
 //L for length, S for Sweep
+<<<<<<< HEAD
 byte modes[] = { 0b11000010,0b01010111};
+=======
+byte modes[] = { 0b11000010, 0b01010111};
+>>>>>>> 10ebdb8ad7a2b5a4b9b04ba72dbf1475f87634bf
 
 void servo_rotate(double *dist_array);
 void SONAR_print(double *dist_array);
@@ -124,7 +128,7 @@ void servo_rotate(double *dist_array)
       for (d = 0; d <= 180; d+= azimuth_step) 
       {   			 
         dist_array[d/azimuth_step] = SONAR_dist();
-        OCR1A = degreeToDuty(d);
+        OCR2A = degreeToDuty(d);
    		  _delay_ms(50 * azimuth_step);
 	  }
    
