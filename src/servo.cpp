@@ -9,33 +9,32 @@ int degreeToDuty(int degree)
     //I want you to know it made a this jittery motion so i changed it to stop it
 }
 
-int servo_left()
+void servo_left()
 {
     for (d = d; d >= 0; d--) 
     {
-    	OCR2A = degreeToDuty(d);
-   		_delay_ms(50);
-	}
+        OCR2A = degreeToDuty(d);
+        _delay_ms(50);
+    }
 }
 
-int servo_right()
+void servo_right()
 {
     for (d = d; d <= 180; d++) 
-    {   			 
+    {    		 
         OCR2A = degreeToDuty(d);
-   		_delay_ms(50);
-	}
-
+        _delay_ms(50);
+    }
 }
 
-int servo_init()
+void servo_init()
 {
-    DDRB |= (1<<SERVO);	// Make OC1A pin as output 
-	TCNT2 = 0;			// Set timer2 count zero 
+    DDRB |= (1<<SERVO); 	// Make OC2A pin as output 
+    TCNT2 = 0; 			// Set timer2 count zero 
 
-	// Set Fast PWM, TOP in ICR2, Clear OC1A on compare match, clk/64 non-inverting mode
-	TCCR2A = (1<<WGM21|1<<COM2A1);  // set required WGM and COM bits in register A to be filled
-	TCCR2B =  (1<<CS22|1<<CS20|1<<WGM22); // set required WGM and CS bits to be filled
+    // Set Fast PWM 8-bit, Clear OC2A on compare match, clk/1024 non-inverting mode
+    TCCR2A = (1<<WGM21 | 1<<WGM20 | 1<<COM2A1);
+    TCCR2B = (1<<CS22 | 1<<CS21 | 1<<CS20);
 }
 
 void servo_goto(int degree) {
