@@ -56,14 +56,14 @@ int main () {
       displyValue(modes[mode]);
     }
     if (PINB & 1 << enterButton) {
-      PORTB |= 1 << busyLED;
+      PORTD |= 1 << busyLED;
       if (mode) {
-        LCD_string("Executing Sonar Sweep");
+        LCD_string("Executing Sonar");
         servo_rotate(distance_array);
         SONAR_print(distance_array);  
       }
       else {
-        LCD_string("Executing Rangefinder");
+        LCD_string("Finding Range");
         servo_goto(90);
         _delay_ms(1000);
         distance = SONAR_dist();
@@ -73,10 +73,10 @@ int main () {
         USART_send('\n');
       }
       LCD_command(1); //clear
-      LCD_string("Execution Complete");
-      PORTB &= ~(1 << busyLED);
+      LCD_string("Done");
+      PORTD &= ~(1 << busyLED);
       for (int i = 0; i < 6; i++) { //Blink 3 times over 3 seconds
-        PORTB ^= 1 << doneLED;
+        PORTD ^= 1 << doneLED;
         _delay_ms(500);
       }
       LCD_command(1); //clear
