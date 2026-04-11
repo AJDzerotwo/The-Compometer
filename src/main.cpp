@@ -12,11 +12,18 @@
 #define azimuth_step 5
 #define array_size azimuth_range / azimuth_step + 1
 
-//S for sweep, L for Lidar
+#define selectButton PB1
+#define enterButton PB2
+
+#define busyLED PC4
+#define doneLED PC5
+
+//Remove ADC files, Redundant
+
+//L for length, S for Sweep
 byte modes[] = {0b01110111, 0b00100011};
 
 void servo_rotate(double *dist_array);
-
 void SONAR_print(double *dist_array);
 
 
@@ -29,12 +36,59 @@ int main () {
   double distance_array[array_size];
   double distance = 0.0;
   char string[10];
-  //double distance_array[37] = {1.2, 30, 30, 30, 1.6, 0, 30, 9, 11, 19, 21, 29, 13, 3, 5.6, 7, 6.7, 12, 4, 3.23, 5.4, 5, 4, 21, 4, 0, 6, 5, 6, 5, 6, 4, 3.4};
   USART_init();
-	//SONAR_init(); 
   servo_init();
-  servo_rotate(distance_array);
- // SONAR_print(distance_array);  
+  SONAR_init();
+  LCD_init();
+  init_shift(DATA, CLOCK, LATCH);
+  uint8_t mode = 0;
+  displyValue(modes[mode]);
+
+  DDRB &= ~(1 << selectButton | 1 << enterButton); //Input 
+	PORTB |= 1 << selectButton | 1 << enterButton;	//Pullup Resistor
+
+  DDRB |= 1 << busyLED | 1 << doneLED; //Output
+
+  while (true) {
+    if (PINB & 1 << selectButton) {
+      mode ++;
+      mode %= 2;
+      displyValue(modes[mode]);
+    }
+    if (PINB & 1 << enterButton) {
+      PORTB |= 1 << busyLED;
+      if (mode) {
+        LCD_string("Executing Sonar Sweep");
+        servo_rotate(distance_array);
+        SONAR_print(distance_array);  
+      }
+      else {
+        LCD_string("Executing Rangefinder");
+        servo_goto(90);
+        _delay_ms(1000);
+        distance = SONAR_dist();
+        itoa(distance, string, 10);
+        USART_send_string("\nDistance: ");
+        USART_send_string(string);
+        USART_send('\n');
+      }
+      LCD_command(1); //clear
+      LCD_string("Execution Complete");
+      PORTB &= ~(1 << busyLED);
+      for (int i = 0; i < 6; i++) { //Blink 3 times over 3 seconds
+        PORTB ^= 1 << doneLED;
+        _delay_ms(500);
+      }
+      LCD_command(1); //clear
+    }
+  }
+
+  //double distance_array[37] = {1.2, 30, 30, 30, 1.6, 0, 30, 9, 11, 19, 21, 29, 13, 3, 5.6, 7, 6.7, 12, 4, 3.23, 5.4, 5, 4, 21, 4, 0, 6, 5, 6, 5, 6, 4, 3.4};
+  //USART_init();
+	//SONAR_init(); 
+  //servo_init();
+  //servo_rotate(distance_array);
+  //SONAR_print(distance_array);  
   /*
   while(true) {
     distance = SONAR_dist();
@@ -69,7 +123,7 @@ void servo_rotate(double *dist_array)
     _delay_ms(1000);
       for (d = 0; d <= 180; d+= azimuth_step) 
       {   			 
-        //dist_array[d/azimuth_step] = SONAR_dist();
+        dist_array[d/azimuth_step] = SONAR_dist();
         OCR1A = degreeToDuty(d);
    		  _delay_ms(50 * azimuth_step);
 	  }
