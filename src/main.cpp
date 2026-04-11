@@ -21,7 +21,7 @@
 //Remove ADC files, Redundant
 
 //L for length, S for Sweep
-byte modes[] = { 0b00100011,0b01110111};
+byte modes[] = { 0b11000010,0b01010111};
 
 void servo_rotate(double *dist_array);
 void SONAR_print(double *dist_array);
@@ -47,7 +47,7 @@ int main () {
   DDRB &= ~(1 << selectButton | 1 << enterButton); //Input 
 	PORTB |= 1 << selectButton | 1 << enterButton;	//Pullup Resistor
 
-  DDRB |= 1 << busyLED | 1 << doneLED; //Output
+  DDRC |= 1 << busyLED | 1 << doneLED; //Output
 
   while (true) {
     if (PINB & 1 << selectButton) {
@@ -56,7 +56,7 @@ int main () {
       displyValue(modes[mode]);
     }
     if (PINB & 1 << enterButton) {
-      PORTD |= 1 << busyLED;
+      PORTC |= 1 << busyLED;
       if (mode) {
         LCD_string("Executing Sonar");
         servo_rotate(distance_array);
@@ -74,9 +74,9 @@ int main () {
       }
       LCD_command(1); //clear
       LCD_string("Done");
-      PORTD &= ~(1 << busyLED);
+      PORTC &= ~(1 << busyLED);
       for (int i = 0; i < 6; i++) { //Blink 3 times over 3 seconds
-        PORTD ^= 1 << doneLED;
+        PORTC ^= 1 << doneLED;
         _delay_ms(500);
       }
       LCD_command(1); //clear
