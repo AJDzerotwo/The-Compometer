@@ -21,7 +21,7 @@
 //Remove ADC files, Redundant
 
 //L for length, S for Sweep
-byte modes[] = {0b01110111, 0b00100011};
+byte modes[] = { 0b00100011,0b01110111};
 
 void servo_rotate(double *dist_array);
 void SONAR_print(double *dist_array);
@@ -58,12 +58,12 @@ int main () {
     if (PINB & 1 << enterButton) {
       PORTB |= 1 << busyLED;
       if (mode) {
-        LCD_string("Executing Sonar Sweep");
+        LCD_string("Executing Sonar");
         servo_rotate(distance_array);
         SONAR_print(distance_array);  
       }
       else {
-        LCD_string("Executing Rangefinder");
+        LCD_string("Finding Range");
         servo_goto(90);
         _delay_ms(1000);
         distance = SONAR_dist();
@@ -73,7 +73,7 @@ int main () {
         USART_send('\n');
       }
       LCD_command(1); //clear
-      LCD_string("Execution Complete");
+      LCD_string("Done");
       PORTB &= ~(1 << busyLED);
       for (int i = 0; i < 6; i++) { //Blink 3 times over 3 seconds
         PORTB ^= 1 << doneLED;
