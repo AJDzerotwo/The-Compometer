@@ -21,7 +21,8 @@
 //Remove ADC files, Redundant
 
 //L for length, S for Sweep
-byte modes[] = { 0b11000010, 0b01010111};
+<<<<<<< HEAD
+byte modes[] = { 0b11000010,0b01010111};
 
 void servo_rotate(double *dist_array);
 void SONAR_print(double *dist_array);
@@ -72,14 +73,14 @@ int main () {
         USART_send_string(string);
         USART_send('\n');
       }
-      LCD_command(CLEAR);
+      LCD_command(1); //clear
       LCD_string("Done");
       PORTC &= ~(1 << busyLED);
       for (int i = 0; i < 6; i++) { //Blink 3 times over 3 seconds
         PORTC ^= 1 << doneLED;
         _delay_ms(500);
       }
-      LCD_command(CLEAR);
+      LCD_command(1); //clear
     }
   }
 
