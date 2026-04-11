@@ -21,7 +21,7 @@
 //Remove ADC files, Redundant
 
 //L for length, S for Sweep
-<<<<<<< HEAD
+
 byte modes[] = { 0b11000010,0b01010111};
 
 void servo_rotate(double *dist_array);
