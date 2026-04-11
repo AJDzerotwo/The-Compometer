@@ -23,13 +23,11 @@ int main () {
   USART_init();
 	SONAR_init();
   while(true) {
-    USART_send_string("???");
     distance = SONAR_dist();
-    
     itoa((int)distance, string, 10);
     USART_send_string(string);
+    USART_send('\n');
     _delay_ms(100);
-    
   }
 
   /*
@@ -50,3 +48,22 @@ int main () {
   */
 }
 
+
+int servo_rotate()
+{
+    while(1)
+    {
+        for (d = d; d <= 180; d++) 
+        {   			 
+            OCR1A = degreeToDuty(d);
+   		    _delay_ms(50);
+	    }
+
+	    for (d = d; d >= 0; d--) 
+        {
+    	    OCR1A = degreeToDuty(d);
+   		    _delay_ms(50);
+	    }
+    }
+    
+}
