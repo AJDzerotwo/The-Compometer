@@ -13,7 +13,7 @@ int servo_left()
 {
     for (d = d; d >= 0; d--) 
     {
-    	OCR1A = degreeToDuty(d);
+    	OCR2A = degreeToDuty(d);
    		_delay_ms(50);
 	}
 }
@@ -22,7 +22,7 @@ int servo_right()
 {
     for (d = d; d <= 180; d++) 
     {   			 
-        OCR1A = degreeToDuty(d);
+        OCR2A = degreeToDuty(d);
    		_delay_ms(50);
 	}
 
@@ -31,16 +31,15 @@ int servo_right()
 int servo_init()
 {
     DDRB |= (1<<SERVO);	// Make OC1A pin as output 
-	TCNT1 = 0;			// Set timer1 count zero 
-	ICR1 = 4999;		// Set TOP count for timer1 in ICR1 register to be filled
+	TCNT2 = 0;			// Set timer2 count zero 
 
-	// Set Fast PWM, TOP in ICR1, Clear OC1A on compare match, clk/64 non-inverting mode
-	TCCR1A = (1<<WGM11|1<<COM1A1);  // set required WGM and COM bits in register A to be filled
-	TCCR1B =  (1<<CS11|1<<CS10|1<<WGM13|1<<WGM12); // set required WGM and CS bits to be filled
+	// Set Fast PWM, TOP in ICR2, Clear OC1A on compare match, clk/64 non-inverting mode
+	TCCR2A = (1<<WGM21|1<<COM2A1);  // set required WGM and COM bits in register A to be filled
+	TCCR2B =  (1<<CS22|1<<CS20|1<<WGM22); // set required WGM and CS bits to be filled
 }
 
 void servo_goto(int degree) {
-    OCR1A = degreeToDuty(degree);
+    OCR2A = degreeToDuty(degree);
     _delay_ms(1000);
 
 }

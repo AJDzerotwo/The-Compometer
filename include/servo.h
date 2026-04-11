@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <avr_debugger.h>
 
-#define SERVO PB1
+#define SERVO PB3
 
 const int DUTY_MIN = 130; //prescalar 64 for 0 degree
 const int DUTY_MAX = 600; //prescalar 64 for 180 degree
