@@ -21,7 +21,7 @@
 //Remove ADC files, Redundant
 
 //L for length, S for Sweep
-byte modes[] = {0b01110111, 0b00100011};
+byte modes[] = { 0b11000010, 0b01010111};
 
 void servo_rotate(double *dist_array);
 void SONAR_print(double *dist_array);
