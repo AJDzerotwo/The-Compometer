@@ -10,8 +10,7 @@ const int DEGREE_MAX = 180;
 extern int d; // global variable to keep track of the current degree position of the servo
 int servo_init();
 int degreeToDuty(int degree);
-int servo_rotate();
 int servo_left();
 int servo_right();
 
-void servo_rotate_degree(int degree);
+void servo_goto(int degree);

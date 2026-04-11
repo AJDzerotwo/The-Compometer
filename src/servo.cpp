@@ -9,25 +9,6 @@ int degreeToDuty(int degree)
     //I want you to know it made a this jittery motion so i changed it to stop it
 }
 
-int servo_rotate()
-{
-    while(1)
-    {
-        for (d = d; d <= 180; d++) 
-        {   			 
-            OCR1A = degreeToDuty(d);
-   		    _delay_ms(50);
-	    }
-
-	    for (d = d; d >= 0; d--) 
-        {
-    	    OCR1A = degreeToDuty(d);
-   		    _delay_ms(50);
-	    }
-    }
-    
-}
-
 int servo_left()
 {
     for (d = d; d >= 0; d--) 
@@ -58,7 +39,7 @@ int servo_init()
 	TCCR1B =  (1<<CS11|1<<CS10|1<<WGM13|1<<WGM12); // set required WGM and CS bits to be filled
 }
 
-void servo_rotate_degree(int degree) {
+void servo_goto(int degree) {
     OCR1A = degreeToDuty(degree);
     _delay_ms(1000);
 

@@ -7,6 +7,9 @@
 #include <LCD.h>
 #include <SONAR.h>
 
+#define azimuth_range 180
+#define distance_range 30
+#define azimuth_step 5
 
 //S for sweep, L for Lidar
 byte modes[] = {0b01110111, 0b00100011};
@@ -17,6 +20,7 @@ int main () {
 		dbg_start();
 	#endif
   
+  double distance_array[180/azimuth_step];
   double distance = 0.0;
   char string[10];
 
@@ -49,21 +53,13 @@ int main () {
 }
 
 
-int servo_rotate()
+double servo_rotate()
 {
-    while(1)
-    {
-        for (d = d; d <= 180; d++) 
-        {   			 
-            OCR1A = degreeToDuty(d);
-   		    _delay_ms(50);
-	    }
-
-	    for (d = d; d >= 0; d--) 
-        {
-    	    OCR1A = degreeToDuty(d);
-   		    _delay_ms(50);
-	    }
-    }
-    
+    servo_goto(0);
+      for (d = d; d <= 180; d+= azimuth_step) 
+      {   			 
+        OCR1A = degreeToDuty(d);
+   		  _delay_ms(50 * azimuth_step);
+	  }
+   
 }
