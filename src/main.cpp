@@ -31,9 +31,10 @@ int main () {
   char string[10];
   //double distance_array[37] = {1.2, 30, 30, 30, 1.6, 0, 30, 9, 11, 19, 21, 29, 13, 3, 5.6, 7, 6.7, 12, 4, 3.23, 5.4, 5, 4, 21, 4, 0, 6, 5, 6, 5, 6, 4, 3.4};
   USART_init();
-	SONAR_init(); 
+	//SONAR_init(); 
+  servo_init();
   servo_rotate(distance_array);
-  SONAR_print(distance_array);  
+ // SONAR_print(distance_array);  
   /*
   while(true) {
     distance = SONAR_dist();
@@ -68,7 +69,7 @@ void servo_rotate(double *dist_array)
     _delay_ms(1000);
       for (d = 0; d <= 180; d+= azimuth_step) 
       {   			 
-        dist_array[d/azimuth_step] = SONAR_dist();
+        //dist_array[d/azimuth_step] = SONAR_dist();
         OCR1A = degreeToDuty(d);
    		  _delay_ms(50 * azimuth_step);
 	  }
