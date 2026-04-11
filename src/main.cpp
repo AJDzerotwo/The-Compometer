@@ -17,10 +17,19 @@ int main () {
 		dbg_start();
 	#endif
   
+  double distance = 0.0;
+  char string[10];
+
   USART_init();
 	SONAR_init();
   while(true) {
-    SONAR_dist();
+    USART_send_string("???");
+    distance = SONAR_dist();
+    
+    itoa((int)distance, string, 10);
+    USART_send_string(string);
+    _delay_ms(100);
+    
   }
 
   /*
